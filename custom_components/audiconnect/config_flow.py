@@ -215,7 +215,7 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
                             options=[
                                 selector.SelectOptionDict(value="1", label="Level 1"),
                                 selector.SelectOptionDict(value="2", label="Level 2"),
-                                selector.SelectOptionDict(value="2", label="Level 3"),
+                                selector.SelectOptionDict(value="3", label="Level 3"),
                             ],
                         )
                     ),
