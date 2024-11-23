@@ -8,6 +8,6 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/cyr-ius/hass-audiconnect/issues",
   "loggers": ["audiconnectpy"],
-  "requirements": ["audiconnectpy==2.4.75"],
-  "version": "2.1.81"
+  "requirements": ["audiconnectpy==2.4.77"],
+  "version": "2.1.82"
 }
