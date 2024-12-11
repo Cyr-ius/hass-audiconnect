@@ -9,5 +9,5 @@
   "issue_tracker": "https://github.com/cyr-ius/hass-audiconnect/issues",
   "loggers": ["audiconnectpy"],
   "requirements": ["audiconnectpy==2.4.78"],
-  "version": "2.1.84"
+  "version": "2.1.9"
 }
