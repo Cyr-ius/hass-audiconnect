@@ -5,14 +5,14 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from audiconnectpy import MODELS, AudiConnect, AudiException, AuthorizationError
 import voluptuous as vol
-
+from audiconnectpy import MODELS, AudiConnect, AudiException, AuthorizationError
 from homeassistant import config_entries
 from homeassistant.const import CONF_PASSWORD, CONF_PIN, CONF_USERNAME
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
-from homeassistant.helpers import device_registry as dr, selector
+from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers import selector
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 
 from .const import (
@@ -54,9 +54,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     @staticmethod
     @callback
-    def async_get_options_flow(config_entry):
+    def async_get_options_flow(config_entry: config_entries.ConfigEntry):
         """Get option flow."""
-        return OptionsFlowHandler(config_entry)
+        return OptionsFlowHandler()
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -99,9 +99,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 class OptionsFlowHandler(config_entries.OptionsFlow):
     """Handle option."""
 
-    def __init__(self, config_entry) -> None:
+    def __init__(self) -> None:
         """Initialize the options flow."""
-        self.config_entry = config_entry
         self._sel = None
         self._data = {}
 
@@ -114,7 +113,7 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
             step_id="init", menu_options=[MENU_VEHICLES, MENU_OTHER, MENU_SAVE]
         )
 
-    async def async_step_vehicles(self, user_input=None) -> FlowResult():
+    async def async_step_vehicles(self, user_input=None) -> FlowResult:
         """Select vehicle."""
         if user_input is not None:
             self._sel = user_input[CONF_VEHICLE]
@@ -145,7 +144,7 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
             step_id="vehicles", data_schema=data_schema, last_step=False
         )
 
-    async def async_step_other(self, user_input=None) -> FlowResult():
+    async def async_step_other(self, user_input=None) -> FlowResult:
         """Handle a flow initialized by the user."""
         if user_input is not None:
             self._data.update(user_input)
@@ -168,7 +167,7 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
             step_id="other", data_schema=data_schema, last_step=False
         )
 
-    async def async_step_apilevel(self, user_input=None) -> FlowResult():
+    async def async_step_apilevel(self, user_input=None) -> FlowResult:
         """Handle a flow initialized by the user."""
         if user_input is not None:
             self._data.update({self._sel: user_input})
@@ -248,6 +247,6 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
             step_id="apilevel", data_schema=data_schema, last_step=False
         )
 
-    async def async_step_save(self, user_input=None) -> FlowResult():
+    async def async_step_save(self, user_input=None) -> FlowResult:
         """Save and exit."""
         return self.async_create_entry(title="", data=self._data)
